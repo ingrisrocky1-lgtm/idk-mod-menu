@@ -1,0 +1,169 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.button import Button
+from kivy.uix.slider import Slider
+from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
+
+
+class ModMenuContent(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(orientation='vertical', spacing=10, padding=20, size_hint_y=None, **kwargs)
+        self.bind(minimum_height=self.setter('height'))
+
+        self.add_widget(Label(text="My GitHub Menu Framework", font_size=32, size_hint_y=None, height=50))
+
+        # --- Toggles section ---
+        self.add_widget(Label(text="Toggles", font_size=24, size_hint_y=None, height=40))
+
+        self.fly_toggle = ToggleButton(text="Fly Mode", size_hint_y=None, height=50)
+        self.fly_toggle.bind(on_press=self.toggle_fly)
+        self.add_widget(self.fly_toggle)
+
+        self.speed_toggle = ToggleButton(text="Speed Boost", size_hint_y=None, height=50)
+        self.speed_toggle.bind(on_press=self.toggle_speed)
+        self.add_widget(self.speed_toggle)
+
+        self.noclip_toggle = ToggleButton(text="NoClip", size_hint_y=None, height=50)
+        self.noclip_toggle.bind(on_press=self.toggle_noclip)
+        self.add_widget(self.noclip_toggle)
+
+        self.godmode_toggle = ToggleButton(text="God Mode", size_hint_y=None, height=50)
+        self.godmode_toggle.bind(on_press=self.toggle_godmode)
+        self.add_widget(self.godmode_toggle)
+
+        # --- New Mods ---
+        self.long_arms_toggle = ToggleButton(text="Long Arms", size_hint_y=None, height=50)
+        self.long_arms_toggle.bind(on_press=self.toggle_long_arms)
+        self.add_widget(self.long_arms_toggle)
+
+        self.platforms_toggle = ToggleButton(text="Platforms", size_hint_y=None, height=50)
+        self.platforms_toggle.bind(on_press=self.toggle_platforms)
+        self.add_widget(self.platforms_toggle)
+
+        self.infinite_jump_toggle = ToggleButton(text="Infinite Jump", size_hint_y=None, height=50)
+        self.infinite_jump_toggle.bind(on_press=self.toggle_infinite_jump)
+        self.add_widget(self.infinite_jump_toggle)
+
+        self.invisibility_toggle = ToggleButton(text="Invisibility", size_hint_y=None, height=50)
+        self.invisibility_toggle.bind(on_press=self.toggle_invisibility)
+        self.add_widget(self.invisibility_toggle)
+
+        # --- Sliders section ---
+        self.add_widget(Label(text="Settings", font_size=24, size_hint_y=None, height=40))
+
+        self.add_widget(Label(text="Speed Level", size_hint_y=None, height=30))
+        self.speed_slider = Slider(min=1, max=20, value=5, size_hint_y=None, height=40)
+        self.speed_slider.bind(value=self.on_speed_change)
+        self.add_widget(self.speed_slider)
+
+        self.add_widget(Label(text="Jump Power", size_hint_y=None, height=30))
+        self.jump_slider = Slider(min=1, max=50, value=10, size_hint_y=None, height=40)
+        self.jump_slider.bind(value=self.on_jump_change)
+        self.add_widget(self.jump_slider)
+
+        self.add_widget(Label(text="Arm Length", size_hint_y=None, height=30))
+        self.arm_slider = Slider(min=1, max=30, value=10, size_hint_y=None, height=40)
+        self.arm_slider.bind(value=self.on_arm_change)
+        self.add_widget(self.arm_slider)
+
+        self.add_widget(Label(text="Platform Size", size_hint_y=None, height=30))
+        self.platform_slider = Slider(min=1, max=20, value=5, size_hint_y=None, height=40)
+        self.platform_slider.bind(value=self.on_platform_change)
+        self.add_widget(self.platform_slider)
+
+        # --- Actions section ---
+        self.add_widget(Label(text="Actions", font_size=24, size_hint_y=None, height=40))
+
+        reset_btn = Button(text="Reset Settings", size_hint_y=None, height=50)
+        reset_btn.bind(on_press=self.reset_settings)
+        self.add_widget(reset_btn)
+
+        print_btn = Button(text="Print Current Config", size_hint_y=None, height=50)
+        print_btn.bind(on_press=self.print_config)
+        self.add_widget(print_btn)
+
+    # --- Toggle handlers ---
+    def toggle_fly(self, instance):
+        print("Fly Mode:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_speed(self, instance):
+        print("Speed Boost:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_noclip(self, instance):
+        print("NoClip:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_godmode(self, instance):
+        print("God Mode:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_long_arms(self, instance):
+        print("Long Arms:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_platforms(self, instance):
+        print("Platforms:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_infinite_jump(self, instance):
+        print("Infinite Jump:", "ON" if instance.state == "down" else "OFF")
+
+    def toggle_invisibility(self, instance):
+        print("Invisibility:", "ON" if instance.state == "down" else "OFF")
+
+    # --- Slider handlers ---
+    def on_speed_change(self, instance, value):
+        print(f"Speed Level set to {value:.1f}")
+
+    def on_jump_change(self, instance, value):
+        print(f"Jump Power set to {value:.1f}")
+
+    def on_arm_change(self, instance, value):
+        print(f"Arm Length set to {value:.1f}x")
+
+    def on_platform_change(self, instance, value):
+        print(f"Platform Size set to {value:.1f}x")
+
+    # --- Buttons ---
+    def reset_settings(self, instance):
+        self.fly_toggle.state = "normal"
+        self.speed_toggle.state = "normal"
+        self.noclip_toggle.state = "normal"
+        self.godmode_toggle.state = "normal"
+        self.long_arms_toggle.state = "normal"
+        self.platforms_toggle.state = "normal"
+        self.infinite_jump_toggle.state = "normal"
+        self.invisibility_toggle.state = "normal"
+        self.speed_slider.value = 5
+        self.jump_slider.value = 10
+        self.arm_slider.value = 10
+        self.platform_slider.value = 5
+        print("Settings reset")
+
+    def print_config(self, instance):
+        print("----- Current Config -----")
+        print("Fly Mode:", self.fly_toggle.state)
+        print("Speed Boost:", self.speed_toggle.state)
+        print("NoClip:", self.noclip_toggle.state)
+        print("God Mode:", self.godmode_toggle.state)
+        print("Long Arms:", self.long_arms_toggle.state)
+        print("Platforms:", self.platforms_toggle.state)
+        print("Infinite Jump:", self.infinite_jump_toggle.state)
+        print("Invisibility:", self.invisibility_toggle.state)
+        print("Speed Level:", self.speed_slider.value)
+        print("Jump Power:", self.jump_slider.value)
+        print("Arm Length:", self.arm_slider.value)
+        print("Platform Size:", self.platform_slider.value)
+        print("--------------------------")
+
+
+class ModMenuApp(App):
+    def build(self):
+        root = BoxLayout(orientation='vertical')
+        scroll = ScrollView()
+        content = ModMenuContent()
+        scroll.add_widget(content)
+        root.add_widget(scroll)
+        return root
+
+
+if __name__ == '__main__':
+    ModMenuApp().run()
